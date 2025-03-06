@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống mã hóa RSA</title>
+    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.10.0/forge.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <h1><i class="fas fa-user-shield"></i> Bảo mật thông tin khách hàng</h1>
+            <p class="intro-text">Nhập thông tin khách hàng vào form bên dưới. Dữ liệu sẽ được mã hóa bằng RSA trước khi gửi đi, đảm bảo an toàn tuyệt đối.</p>
+            <form id="customerDataForm">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Họ và tên:</label>
+                    <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
+                </div>
+                <div class="form-group">
+                    <label for="idCard"><i class="fas fa-id-card"></i> Số CMND/CCCD:</label>
+                    <input type="text" id="idCard" name="idCard" placeholder="Nhập số CMND/CCCD" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-phone"></i> Số điện thoại:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                </div>
+                <div class="form-group">
+                    <label for="address"><i class="fas fa-map-marker-alt"></i> Địa chỉ:</label>
+                    <input type="text" id="address" name="address" placeholder="Nhập địa chỉ">
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Nhập email">
+                </div>
+                 <button type="button" id="nextStep">Tiếp tục <i class="fas fa-arrow-right"></i></button>
+            </form>
+
+        </div>
+
+        <div class="right-side">
+            <h2><i class="fas fa-list-ol"></i> Quy trình mã hóa</h2>
+             <div class="process-step" id="step1">
+                <div class="step-icon"><i class="fas fa-edit"></i></div>
+                <div class="step-content">
+                    <h3>1. Nhập dữ liệu</h3>
+                    <p>Dữ liệu khách hàng được nhập vào form.</p>
+                    <pre id="originalData" class="output"></pre>
+                </div>
+
+            </div>
+            <div class="process-step" id="step2" hidden>
+                <div class="step-icon"><i class="fas fa-lock"></i></div>
+                <div class="step-content">
+                    <h3>2. Mã hóa dữ liệu</h3>
+                      <p>Dữ liệu được mã hóa bằng RSA và chuyển sang dạng Base64.</p>
+                    <pre id="encryptedData" class="output"></pre>
+                    <div class="loader" id="encryptLoader" hidden></div>  </div>
+            </div>
+            <div class="process-step" id="step3" hidden>
+               <div class="step-icon"><i class="fas fa-server"></i></div>
+                <div class="step-content">
+                    <h3>3. Gửi dữ liệu</h3>
+                 
+                </div>
+            </div>
+            <div class="process-step" id="step4" hidden>
+                <div class="step-icon"> <i class="fas fa-key"></i></div>
+                <div class="step-content">
+                    <h3>4. Giải mã dữ liệu</h3>
+                   
+                    <div class="loader" id="decryptLoader" hidden></div>
+                </div>
+            </div>
+            <div class="process-step" id="step5" hidden>
+                <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="step-content">
+                     <h3>5. Kết quả</h3>
+                    <p>Dữ liệu đã giải mã được hiển thị.</p>
+                    <pre id="decryptedData" class="output"></pre>
+                </div>
+            </div>
+            <button type="button" id="resetForm" hidden>Nhập lại <i class="fas fa-redo"></i></button>
+
+        </div>
+    </div>
+</body>
+</html>
